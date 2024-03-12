@@ -1,29 +1,30 @@
 # 1244. [S/W 문제해결 응용] 2일차 - 최대 상금 
 def dfs(n):
-    global answer
-    if n==N:
-        answer = max(answer, int("".join(map(str, lst))))
-        return        
+    global result
+    if n == N:
+        result = max(result, int("".join(map(str, num))))
+        return 
     for i in range(L-1):
         for j in range(i+1, L):
-            lst[i], lst[j] = lst[j], lst[i]
+            num[i], num[j] = num[j], num[i]
 
-            chk = int("".join(map(str, lst)))
-            if (n, chk) not in v:
+            check = int("".join(map(str, num)))
+            if (n, check) not in visited:
                 dfs(n+1)
-                v.append((n,chk))
+                visited.append((n, check))
 
-            lst[j], lst[i] = lst[i], lst[j]
+            num[j], num[i] = num[i], num[j]
 
 T = int(input())
 
 for test_case in range(1, T + 1):
     st, t = map(str, input().split())
+    num, visited = [], []
     N = int(t)
-    lst, v = [], []
     L = len(st)
-    answer = 0
+    result = 0
+
     for i in st:
-        lst.append(i)
+        num.append(i)
     dfs(0)
-    print(f'#{test_case} {answer}')
+    print("#{} {}".format(test_case, result))
